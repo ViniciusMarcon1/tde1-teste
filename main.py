@@ -1,67 +1,64 @@
 #Vinicius Borrelli Marcon
 
-#OBS: MELHORAR NOME DAS VÁRIAVEIS E FUNÇÕES (PADRONIZAR) 
-
 #Extraíndo o arquivo de texto para uma váriavel   -- ARQUIVO TXT PRECISA SER ATUALIADO DENTRO DO ARQUIVO "INPUT TXT" -- 
 with open("input.txt","r") as txt:
     raw_text = [line.strip() for line in txt.readlines()] #Tira quebra de linhas que dava problemas
 
-#Número de operações 
-op_numbers = int(raw_text[0])
+numero_operacoes = int(raw_text[0])
 
 # Função para transformar cada elemento do conjunto em um elemento de lista - e botar nessa lista 
-def convert_to_list(conj_str):
-    return [element.strip() for element in conj_str.split(",")]
+def converter_p_lista(texto):
+    return [element.strip() for element in texto.split(",")]
 
 
 #Extraíndo as operações em operador e listas (c1 e c2)
-def extractor(op_numbers):
+def extrator(numero_operacoes):
     i = 1
-    while op_numbers > 0: #continua extraíndo e calculando até acabar o num de operações 
-        operator = raw_text[i]
-        conj1 = convert_to_list(raw_text[i + 1])
-        conj2 = convert_to_list(raw_text[i + 2])
+    while numero_operacoes > 0: #continua extraíndo e calculando até acabar o num de operações 
+        operador = raw_text[i]
+        conj_1 = converter_p_lista(raw_text[i + 1])
+        conj_2 = converter_p_lista(raw_text[i + 2])
         i += 3
-        op_numbers -= 1
-        print(f'{operator}: Conjunto 1 {conj1}, conjunto 2 {conj2}. Resultado: {calcular(operator,conj1,conj2)}') # chamando a função de calculo para cada grupo no txt
+        numero_operacoes -= 1
+        print(f'{operador}: Conjunto 1 {conj_1}, conjunto 2 {conj_2}. Resultado: {calcular(operador,conj_1,conj_2)}') # chamando a função de calculo para cada grupo no txt
 
-def calcular(operator,conj_A,conj_B): #Chama a função dependendo do operador
-    if operator == 'U':
-        return union(conj_A,conj_B)
-    elif operator =='I':
-        return intersection(conj_A,conj_B)
-    elif operator == 'D':
-        return diference(conj_A,conj_B)
-    elif operator == 'C':
-        return cartesian(conj_A,conj_B)
+def calcular(operador,conj_A,conj_B): #Chama a função dependendo do operador
+    if operador == 'U':
+        return uniao(conj_A,conj_B)
+    elif operador =='I':
+        return intersecao(conj_A,conj_B)
+    elif operador == 'D':
+        return diferenca(conj_A,conj_B)
+    elif operador == 'C':
+        return cartesiano(conj_A,conj_B)
 
-def union(conj_A,conj_B):
-    union_conjuto = conj_A
+def uniao(conj_A,conj_B):
+    conjunto_uniao = conj_A
     for i in conj_B:
         if i not in conj_A:
-            union_conjuto.append(i)
-    return union_conjuto
+            conjunto_uniao.append(i)
+    return conjunto_uniao
 
-def intersection(conj_A,conj_B):
-    intersection_conjunto = []
+def intersecao(conj_A,conj_B):
+    conjunto_intersecao = []
     for i in conj_A:
         if i in conj_B:
-            intersection_conjunto.append(i)
-    return intersection_conjunto
+            conjunto_intersecao.append(i)
+    return conjunto_intersecao
 
-def diference(conj_A,conj_B):
-    diference_conjunto = []
+def diferenca(conj_A,conj_B):
+    conjunto_diferenca = []
     for i in conj_A:
         if i not in conj_B:
-            diference_conjunto.append(i)
-    return diference_conjunto
+            conjunto_diferenca.append(i)
+    return conjunto_diferenca
 
-def cartesian(conj_A,conj_B):
-    cartesian_conjuto = []
+def cartesiano(conj_A,conj_B):
+    conjunto_cartesiano = []
     for i in conj_A:
         for j in conj_B:
-            if (((i,j)) not in cartesian_conjuto):
-                cartesian_conjuto += [(i,j)]
-    return cartesian_conjuto
+            if (((i,j)) not in conjunto_cartesiano):
+                conjunto_cartesiano += [(i,j)]
+    return conjunto_cartesiano
 
-extractor(op_numbers) #Chamada da função que executa o programa
+extrator(numero_operacoes) #Chamada da função que executa o programa
